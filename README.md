@@ -1,5 +1,9 @@
 # Cord ID Monitor
 
+<p align="center">
+  <img src="assets/cord-id-monitor.png" width="128" height="128" Alt="Cord ID Monitor Icon">
+</p>
+
 **Cord ID Monitor** helps you instantly identify your USB cable's actual specifications and performance.
 
 Designed for Linux, this GUI application gives you real-time visibility into your USB connections, verifying if your cables and devices are performing at their advertised speeds or if they have been downgraded due to poor quality or incompatibility.
