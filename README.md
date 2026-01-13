@@ -23,6 +23,12 @@ Use the automated installer to download the AppImage and add it to your system m
 curl -s https://raw.githubusercontent.com/meliorisse/CordIDMonitor/main/install.sh | bash
 ```
 
+-- or --
+
+```bash
+wget -qO- https://raw.githubusercontent.com/meliorisse/CordIDMonitor/main/install.sh | bash
+```
+
 ### Option B: Manual AppImage
 If you prefer to just download the portable file.
 
