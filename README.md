@@ -82,6 +82,27 @@ For developers or users who prefer running the Python code directly.
 
 ---
 
+## Uninstalling
+
+If you installed via the **Quick Install** script or **AppImage**, you can remove the application by deleting the following files:
+
+```bash
+# Remove AppImage and Desktop Shortcuts
+rm ~/.local/bin/cord-id-monitor.AppImage
+rm ~/.local/share/applications/cord-id-monitor.desktop
+rm ~/.local/share/icons/hicolor/512x512/apps/cord-id-monitor.png
+
+# Update Desktop Cache
+update-desktop-database ~/.local/share/applications
+```
+
+To remove your history and configuration data:
+```bash
+rm -rf ~/.config/cord_id_monitor
+```
+
+---
+
 ## How to Use
 
 1.  **Launch:** Start the application. You will see two lists:
