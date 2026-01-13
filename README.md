@@ -1,6 +1,8 @@
 # Cord ID Monitor
 
-**Cord ID Monitor** is a Linux GUI application designed to give you real-time visibility into your USB connections. It helps you verify if your cables and devices are performing at their advertised speeds or if they have been downgraded due to poor quality or incompatibility.
+**Cord ID Monitor** helps you instantly identify your USB cable's actual specifications and performance.
+
+Designed for Linux, this GUI application gives you real-time visibility into your USB connections, verifying if your cables and devices are performing at their advertised speeds or if they have been downgraded due to poor quality or incompatibility.
 
 ## What This Does
 
@@ -17,7 +19,7 @@
 ### Option A: AppImage (Recommended)
 The easiest way to run Cord ID Monitor on any Linux distribution (Ubuntu, Fedora, Arch, etc.).
 
-1.  **Download:** Go to the [Releases Page](https://github.com/meliorisse/CordIDMonitor/releases) and download the latest `Cord_ID_Monitor-x86_64.AppImage`.
+1.  **Download:** [Click here to download the latest `Cord_ID_Monitor-x86_64.AppImage`](https://github.com/meliorisse/CordIDMonitor/releases/latest/download/Cord_ID_Monitor-x86_64.AppImage)
 2.  **Make Executable:**
     *   Right-click the downloaded file -> Properties -> Permissions -> Check "Allow executing file as program".
     *   *Or via terminal:* `chmod +x Cord_ID_Monitor-x86_64.AppImage`
@@ -28,7 +30,7 @@ For developers or users who prefer running the Python code directly.
 
 **Prerequisites:**
 *   Python 3.8+
-*   GTK4 Development Libraries (e.g., `libgtk-4-dev`, `python3-gi`, `libcairo2-dev`)
+*   GTK4 Development Libraries (System Packages)
 
 **Steps:**
 1.  **Clone the Repository:**
@@ -37,18 +39,36 @@ For developers or users who prefer running the Python code directly.
     cd CordIDMonitor
     ```
 
-2.  **Set up Virtual Environment:**
+2.  **Install System Libraries:**
+    
+    *Ubuntu / Debian:*
+    ```bash
+    sudo apt update
+    sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-4.0 libgirepository1.0-dev libcairo2-dev
+    ```
+
+    *Fedora:*
+    ```bash
+    sudo dnf install python3-gobject gtk4 gobject-introspection-devel cairo-gobject-devel
+    ```
+
+    *Arch Linux:*
+    ```bash
+    sudo pacman -S python-gobject gtk4 gobject-introspection
+    ```
+
+3.  **Set up Virtual Environment:**
     ```bash
     python3 -m venv venv
     source venv/bin/activate
     ```
 
-3.  **Install Dependencies:**
+4.  **Install Python Dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-4.  **Run:**
+5.  **Run:**
     ```bash
     ./run_app.sh
     ```
