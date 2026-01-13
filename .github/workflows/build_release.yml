@@ -1,0 +1,103 @@
+name: Build and Release AppImage
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install System Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-gi python3-gi-cairo gir1.2-gtk-4.0 libgirepository1.0-dev libcairo2-dev
+
+    - name: Prepare AppDir
+      run: |
+        # Download appimagetool
+        wget -q https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage -O appimagetool
+        chmod +x appimagetool
+
+        # Create Structure
+        mkdir -p AppDir/usr/bin
+        mkdir -p AppDir/usr/share/applications
+        mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
+        mkdir -p AppDir/usr/lib/python3.12/site-packages
+
+        # Copy Assets
+        # Note: We create a simple icon if it doesn't exist, or use one if provided
+        echo '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><rect width="128" height="128" rx="20" fill="#2c3e50"/><path d="M64 20v20M64 108v-20M20 64h20M108 64h-20" stroke="#ecf0f1" stroke-width="8"/><circle cx="64" cy="64" r="20" fill="#e74c3c"/></svg>' > AppDir/usr/share/icons/hicolor/scalable/apps/cord-id-monitor.svg
+        cp AppDir/usr/share/icons/hicolor/scalable/apps/cord-id-monitor.svg AppDir/cord-id-monitor.svg
+
+        # Create Desktop File
+        cat > AppDir/usr/share/applications/cord-id-monitor.desktop <<EOF
+        [Desktop Entry]
+        Type=Application
+        Name=Cord ID Monitor
+        Comment=Monitor USB device connections and speeds
+        Exec=cord_id_monitor
+        Icon=cord-id-monitor
+        Categories=Utility;System;Monitor;
+        Terminal=false
+        EOF
+        cp AppDir/usr/share/applications/cord-id-monitor.desktop AppDir/
+
+        # Copy Code
+        cp -r cord_id_monitor/src/cord_id_monitor AppDir/usr/bin/
+
+        # Install Python Dependencies
+        pip install -r cord_id_monitor/requirements.txt --target AppDir/usr/lib/python3.12/site-packages
+
+        # Create AppRun
+        cat > AppDir/AppRun <<EOF
+        #!/bin/bash
+        export APPDIR=\$(dirname "\$(readlink -f "\$0")")
+        export PYTHONPATH="\$APPDIR/usr/lib/python3.12/site-packages:\$APPDIR/usr/bin:\$PYTHONPATH"
+
+        # Check for Python 3
+        if ! command -v python3 &> /dev/null; then
+            if command -v notify-send &> /dev/null; then
+                notify-send "Cord ID Monitor Error" "Python 3 is required but not found."
+            fi
+            exit 1
+        fi
+
+        # Check for GObject
+        python3 -c "import gi" &> /dev/null
+        if [ \$? -ne 0 ]; then
+             if command -v notify-send &> /dev/null; then
+                notify-send "Cord ID Monitor Error" "System dependency 'python3-gi' (PyGObject) is missing."
+            fi
+            exit 1
+        fi
+
+        # Launch the app
+        exec python3 -m cord_id_monitor.main "\$@"
+        EOF
+        chmod +x AppDir/AppRun
+
+    - name: Build AppImage
+      env:
+        ARCH: x86_64
+      run: |
+        ./appimagetool AppDir Cord_ID_Monitor-x86_64.AppImage
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: Cord_ID_Monitor-x86_64.AppImage

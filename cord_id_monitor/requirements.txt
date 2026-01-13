@@ -1,0 +1,2 @@
+# PyGObject # Provided by system (python3-gi) to avoid compilation
+pyudev
