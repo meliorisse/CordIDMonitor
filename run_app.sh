@@ -1,10 +1,9 @@
 #!/bin/bash
-# Get the directory where this script resides (usb_monitor/)
+# Get the directory where this script resides (project root)
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-# Get project root (parent of usb_monitor/)
-PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-# Path to venv python
-VENV_PYTHON="$PROJECT_ROOT/venv/bin/python3"
+
+# Path to venv python (assumes venv is in the project root)
+VENV_PYTHON="$SCRIPT_DIR/venv/bin/python3"
 
 # Add the 'src' directory to PYTHONPATH
 export PYTHONPATH=$PYTHONPATH:$SCRIPT_DIR/src

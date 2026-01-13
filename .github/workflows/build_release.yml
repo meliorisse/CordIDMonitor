@@ -57,10 +57,10 @@ jobs:
         cp AppDir/usr/share/applications/cord-id-monitor.desktop AppDir/
 
         # Copy Code
-        cp -r cord_id_monitor/src/cord_id_monitor AppDir/usr/bin/
+        cp -r src/cord_id_monitor AppDir/usr/bin/
 
         # Install Python Dependencies
-        pip install -r cord_id_monitor/requirements.txt --target AppDir/usr/lib/python3.12/site-packages
+        pip install -r requirements.txt --target AppDir/usr/lib/python3.12/site-packages
 
         # Create AppRun
         cat > AppDir/AppRun <<EOF
