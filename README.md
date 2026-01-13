@@ -16,8 +16,15 @@ Designed for Linux, this GUI application gives you real-time visibility into you
 
 ## Installation
 
-### Option A: AppImage (Recommended)
-The easiest way to run Cord ID Monitor on any Linux distribution (Ubuntu, Fedora, Arch, etc.).
+### Option A: Quick Install (Recommended)
+Use the automated installer to download the AppImage and add it to your system menu.
+
+```bash
+curl -s https://raw.githubusercontent.com/meliorisse/CordIDMonitor/main/install.sh | bash
+```
+
+### Option B: Manual AppImage
+If you prefer to just download the portable file.
 
 1.  **Download:** [Click here to download the latest `Cord_ID_Monitor-x86_64.AppImage`](https://github.com/meliorisse/CordIDMonitor/releases/latest/download/Cord_ID_Monitor-x86_64.AppImage)
 2.  **Make Executable:**
@@ -25,7 +32,7 @@ The easiest way to run Cord ID Monitor on any Linux distribution (Ubuntu, Fedora
     *   *Or via terminal:* `chmod +x Cord_ID_Monitor-x86_64.AppImage`
 3.  **Run:** Double-click the file to start the application.
 
-### Option B: Running from Source
+### Option C: Running from Source
 For developers or users who prefer running the Python code directly.
 
 **Prerequisites:**

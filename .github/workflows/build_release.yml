@@ -35,13 +35,12 @@ jobs:
         # Create Structure
         mkdir -p AppDir/usr/bin
         mkdir -p AppDir/usr/share/applications
-        mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
+        mkdir -p AppDir/usr/share/icons/hicolor/512x512/apps
         mkdir -p AppDir/usr/lib/python3.12/site-packages
 
         # Copy Assets
-        # Note: We create a simple icon if it doesn't exist, or use one if provided
-        echo '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><rect width="128" height="128" rx="20" fill="#2c3e50"/><path d="M64 20v20M64 108v-20M20 64h20M108 64h-20" stroke="#ecf0f1" stroke-width="8"/><circle cx="64" cy="64" r="20" fill="#e74c3c"/></svg>' > AppDir/usr/share/icons/hicolor/scalable/apps/cord-id-monitor.svg
-        cp AppDir/usr/share/icons/hicolor/scalable/apps/cord-id-monitor.svg AppDir/cord-id-monitor.svg
+        cp assets/cord-id-monitor.png AppDir/usr/share/icons/hicolor/512x512/apps/cord-id-monitor.png
+        cp assets/cord-id-monitor.png AppDir/cord-id-monitor.png
 
         # Create Desktop File
         cat > AppDir/usr/share/applications/cord-id-monitor.desktop <<EOF
